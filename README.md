@@ -1,4 +1,4 @@
-# 使用方法
+#### 使用方法
 * Gradle
 ```
 compile 'com.fynn.switcher:switch:1.0.0'
