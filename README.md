@@ -3,7 +3,7 @@
 ```
 compile 'com.fynn.switcher:switch:1.0.0'
 ```
-*Maven
+* Maven
 ```
 <dependency>
   <groupId>com.fynn.switcher</groupId>
@@ -12,7 +12,7 @@ compile 'com.fynn.switcher:switch:1.0.0'
   <type>pom</type>
 </dependency>
 ```
-*lvy
+* lvy
 ```
 <dependency org='com.fynn.switcher' name='switch' rev='1.0.0'>
   <artifact name='$AID' ext='pom'></artifact>
