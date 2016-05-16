@@ -33,7 +33,7 @@ project.properties
 
 # IDEA project files
 *.iml
-#.idea/
+.idea/
 
 # OS generated files
 .DS_Store
