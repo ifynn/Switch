@@ -1,6 +1,13 @@
 #### 使用方法
 * gradle
 ```
+allprojects {
+    repositories {
+        jcenter()
+    }
+}
+```
+```
 compile 'com.fynn.switcher:switch:1.0.0'
 ```
 * maven
