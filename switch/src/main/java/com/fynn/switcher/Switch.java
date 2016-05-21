@@ -40,6 +40,8 @@ public class Switch extends View implements Checkable {
     private int switchOffColor;
     private int spotOnColor;
     private int spotOffColor;
+    private int switchOnStrokeColor;
+    private int switchOffStrokeColor;
     private int spotPadding;
     private float currentPos;
     private boolean mChecked;
@@ -64,6 +66,8 @@ public class Switch extends View implements Checkable {
         spotOnColor = DEFAULT_SPOT_ON_COLOR;
         spotOffColor = DEFAULT_SPOT_OFF_COLOR;
         spotPadding = dp2px(DEFAULT_SPOT_PADDING);
+        switchOnStrokeColor = switchOnColor;
+        switchOffStrokeColor = switchOffColor;
         duration = ANIMATION_DURATION;
         state = mChecked ? State.SWITCH_ON : State.SWITCH_OFF;
 
@@ -78,6 +82,8 @@ public class Switch extends View implements Checkable {
         spotOnColor = a.getColor(R.styleable.Switch_spotOnColor, DEFAULT_SPOT_ON_COLOR);
         spotOffColor = a.getColor(R.styleable.Switch_spotOffColor, DEFAULT_SPOT_OFF_COLOR);
         spotPadding = a.getDimensionPixelSize(R.styleable.Switch_spotPadding, dp2px(DEFAULT_SPOT_PADDING));
+        switchOnStrokeColor = a.getColor(R.styleable.Switch_switchOnStrokeColor, switchOnColor);
+        switchOffStrokeColor = a.getColor(R.styleable.Switch_switchOffStrokeColor, switchOffColor);
         duration = a.getInteger(R.styleable.Switch_duration, ANIMATION_DURATION);
         mChecked = a.getBoolean(R.styleable.Switch_checked, false);
         a.recycle();
@@ -139,11 +145,12 @@ public class Switch extends View implements Checkable {
             case SWITCH_ANIMATION_OFF:
                 drawSwitchOffAnim(canvas);
                 break;
-
         }
     }
 
     private void drawSwitchOn(Canvas canvas) {
+        drawRoundRectStroke(canvas, switchOnStrokeColor);
+
         float[] rectAttrs = compRoundRectAttr(SWITCH_OFF_POS);
         drawRoundRect(canvas, switchOnColor, rectAttrs);
 
@@ -152,6 +159,8 @@ public class Switch extends View implements Checkable {
     }
 
     private void drawSwitchOff(Canvas canvas) {
+        drawRoundRectStroke(canvas, switchOffStrokeColor);
+
         float[] rectAttrs = compRoundRectAttr(SWITCH_OFF_POS);
         drawRoundRect(canvas, switchOffColor, rectAttrs);
 
@@ -160,6 +169,9 @@ public class Switch extends View implements Checkable {
     }
 
     private void drawSwitchOnAnim(Canvas canvas) {
+        int strokeColor = compColor(currentPos, switchOffStrokeColor, switchOnStrokeColor);
+        drawRoundRectStroke(canvas, strokeColor);
+
         float[] rectAttrs = compRoundRectAttr(SWITCH_OFF_POS);
         drawRoundRect(canvas, switchOnColor, rectAttrs);
 
@@ -172,8 +184,13 @@ public class Switch extends View implements Checkable {
     }
 
     private void drawSwitchOffAnim(Canvas canvas) {
+        int strokeColor = compColor(1 - currentPos, switchOffStrokeColor, switchOnStrokeColor);
+        drawRoundRectStroke(canvas, strokeColor);
+
         float[] rectAttrs = compRoundRectAttr(SWITCH_OFF_POS);
-        drawRoundRect(canvas, switchOnColor, rectAttrs);
+        if (currentPos != 1) {
+            drawRoundRect(canvas, switchOnColor, rectAttrs);
+        }
 
         rectAttrs = compRoundRectAttr(1 - currentPos);
         drawRoundRect(canvas, switchOffColor, rectAttrs);
@@ -191,6 +208,25 @@ public class Switch extends View implements Checkable {
         paint.setColor(color);
         rectF.set(attrs[0], attrs[1], attrs[2], attrs[3]);
         canvas.drawRoundRect(rectF, attrs[4], attrs[4], paint);
+    }
+
+    private void drawRoundRectStroke(Canvas canvas, int color) {
+        int sw = dp2px(DEFAULT_WIDTH);
+        int sh = dp2px(DEFAULT_HEIGHT);
+
+        float left = 0;
+        float right = sw - left;
+        float top = 0;
+        float bottom = sh - top;
+        float radius = (bottom - top) * 0.5f;
+
+        Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setColor(color);
+        paint.setStrokeWidth(0);
+        RectF rectF = new RectF();
+        rectF.set(left, top, right, bottom);
+        canvas.drawRoundRect(rectF, radius, radius, paint);
     }
 
     private void drawOval(Canvas canvas, int color, float[] attrs) {
@@ -392,6 +428,24 @@ public class Switch extends View implements Checkable {
         invalidate();
     }
 
+    public int getSwitchOffStrokeColor() {
+        return switchOffStrokeColor;
+    }
+
+    public void setSwitchOffStrokeColor(int switchOffStrokeColor) {
+        this.switchOffStrokeColor = switchOffStrokeColor;
+        invalidate();
+    }
+
+    public int getSwitchOnStrokeColor() {
+        return switchOnStrokeColor;
+    }
+
+    public void setSwitchOnStrokeColor(int switchOnStrokeColor) {
+        this.switchOnStrokeColor = switchOnStrokeColor;
+        invalidate();
+    }
+
     public OnCheckedChangeListener getOnCheckedChangeListener() {
         return onCheckedChangeListener;
     }
@@ -404,7 +458,7 @@ public class Switch extends View implements Checkable {
         /**
          * Called when the checked state of a switch has changed.
          *
-         * @param s  The switch whose state has changed.
+         * @param s         The switch whose state has changed.
          * @param isChecked The new checked state of switch.
          */
         void onCheckedChanged(Switch s, boolean isChecked);

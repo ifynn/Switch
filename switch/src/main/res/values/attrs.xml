@@ -7,7 +7,9 @@
         <attr name="switchOffColor" format="reference|color"/>
         <attr name="spotOnColor" format="reference|color"/>
         <attr name="spotOffColor" format="reference|color"/>
-        <attr name="spotPadding" format="reference|color"/>
+        <attr name="switchOnStrokeColor" format="reference|color"/>
+        <attr name="switchOffStrokeColor" format="reference|color"/>
+        <attr name="spotPadding" format="reference|dimension"/>
         <attr name="duration" format="reference|integer" />
     </declare-styleable>
     
