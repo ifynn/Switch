@@ -15,7 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        switch:checked="true"
+        switch:checked="false"
         switch:duration="250"
         switch:spotOffColor="#e0e0e0"
         switch:switchOffColor="#ffffff"

@@ -8,20 +8,20 @@ allprojects {
 }
 ```
 ```
-compile 'com.fynn.switcher:switch:1.0.0'
+compile 'com.fynn.switcher:switch:1.0.1'
 ```
 * maven
 ```
 <dependency>
   <groupId>com.fynn.switcher</groupId>
   <artifactId>switch</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.1</version>
   <type>pom</type>
 </dependency>
 ```
 * lvy
 ```
-<dependency org='com.fynn.switcher' name='switch' rev='1.0.0'>
+<dependency org='com.fynn.switcher' name='switch' rev='1.0.1'>
   <artifact name='$AID' ext='pom'></artifact>
 </dependency>
 ```
