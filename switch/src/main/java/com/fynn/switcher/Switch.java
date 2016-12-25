@@ -290,6 +290,16 @@ public class Switch extends View implements Checkable {
         return (int) (dpValue * scale + 0.5f);
     }
 
+    /**
+     * Sets the thumb position as a decimal value between 0 (off) and 1 (on).
+     *
+     * @param position new position between [0,1]
+     */
+    private void setThumbPosition(float position) {
+        currentPos = position;
+        invalidate();
+    }
+
     @TargetApi(Build.VERSION_CODES.KITKAT)
     @Override
     public void setChecked(boolean checked) {
@@ -322,7 +332,7 @@ public class Switch extends View implements Checkable {
             } else {
                 // Immediately move the thumb to the new position.
                 cancelPositionAnimator();
-                currentPos = 0;
+                setThumbPosition(checked ? SWITCH_ON_POS : SWITCH_OFF_POS);
             }
         }
     }
