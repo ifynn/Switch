@@ -5,7 +5,7 @@ apply plugin: 'com.jfrog.bintray'
 def siteUrl = 'https://github.com/ifynn/Switch'
 def gitUrl = 'https://github.com/ifynn/Switch.git'
 group = "com.fynn.switcher"
-version = "1.0.1"
+version = "1.0.2"
 
 android {
     compileSdkVersion 23
@@ -34,6 +34,7 @@ install {
                 description 'A switch for Android'
                 // #CONFIG# // project title
                 url siteUrl
+
                 // Set your license
                 licenses {
                     license {
